@@ -1,5 +1,5 @@
 /*
-# Description: 
+# Description: Play a game of checkers with a Minimax bot.
 # Author: Xin Yu
 # Date: 05 November 2021
 */
@@ -38,6 +38,7 @@
 #define COST_PIECE          1       // one piece cost
 #define COST_TOWER          3       // one tower cost
 #define TREE_DEPTH          3       // minimax tree depth
+#define ROOT_DEPTH          0       // the root depth
 
 #define P_COMP_ACTIONS      10      // number of computed actions for P command
 #define A_COMP_ACTIONS      1       // number of computed actions for A command
@@ -92,9 +93,6 @@
 // command characters
 #define A_COMMAND           'A'
 #define P_COMMAND           'P'
-
-// minimax
-#define ROOT_DEPTH          0       // the root depth
 
 // error messages
 #define ERROR1              "ERROR: Source cell is outside of the board.\n"
@@ -187,10 +185,10 @@ int main (int argc, char *argv[]) {
             int player = turn % NUM_PLAYERS;
             if (player == WHITE) {  // human's turn
                 printf("Human (White Pieces) Turn - Enter your action"
-                " (eg. B4-C4): ");
+                " (eg. B3-C4): ");
                 get_action(action, &command);
                 while (!is_action_legal(board, action, player, TRUE)) {
-                    printf("Please try again. Enter your action (eg. B4-C4): ");
+                    printf("Please try again. Enter your action (eg. B3-C4): ");
                     get_action(action, &command);
                 }
                 do_action(board, action, player);
@@ -201,7 +199,7 @@ int main (int argc, char *argv[]) {
                 node_t *best_action = create_new_node(TEMP); 
                         // starts with a temporary placeholder action
                 best_action = minimax(ROOT_DEPTH, TREE_DEPTH, board, 
-                    turn%NUM_PLAYERS, best_action);
+                    player, best_action);
                         // that is then be replaced by the best action from minimax
                 
                 // Check if a player won
@@ -226,11 +224,9 @@ int main (int argc, char *argv[]) {
         }
     }
 
-    
-
     if (mode == 2) {
         printf("===================== BULK INPUT MODE =====================\n");
-        printf("Enter a list of actions (eg. B4-C4) followed by a command \
+        printf("Enter a list of actions (eg. B3-C4) followed by a command \
         [A-predict next move, P-predict next 10 moves]:");
         printf(NEWLINE);
 
@@ -288,7 +284,6 @@ int main (int argc, char *argv[]) {
         }
     }
     
-
     return EXIT_SUCCESS;            // exit program with the success code
 }
 
