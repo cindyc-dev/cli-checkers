@@ -13,7 +13,7 @@ _________ .__                   __
 ## [Live Demo](https://replit.com/@unixc/cli-checkers?embed=1&output=1#.replit)
 > hosted on repl.it (makes sure to press the green triangle at the bottom right corner to run the program)
 
-![](images\checkers.gif)
+![](images/checkers.gif)
 
 ## Technologies Used
 * C
